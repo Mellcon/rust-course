@@ -1,29 +1,24 @@
-const W: usize = 40; // Ширина конверта (від 10 до 80)
-const H: usize = 20; // Висота конверта (від 10 до 80)
+const WIDTH: usize = 40;  // Ширина конверта (від 10 до 80)
+const HEIGHT: usize = 20; // Висота конверта (від 10 до 80)
 
 fn main() {
-    let mut result = String::new();
+    let mut canvas = String::new();
 
-    for y in 0..H {
-        for x in 0..W {
-            // межі рамки
-            if y == 0 || y == H - 1 {
-                result.push('*');
-            } else if x == 0 || x == W - 1 {
-                result.push('*');
-            }
-            // діагоналі
-            else if x * (H - 1) == y * (W - 1) || x * (H - 1) == (H - 1 - y) * (W - 1) {
-                result.push('*');
-            }
-            // порожні місця
-            else {
-                result.push(' ');
+    for row in 0..HEIGHT {
+        for col in 0..WIDTH {
+            let is_border_top_or_bottom = row == 0 || row == HEIGHT - 1;
+            let is_border_sides = col == 0 || col == WIDTH - 1;
+            let is_diagonal_main = col * (HEIGHT - 1) == row * (WIDTH - 1);
+            let is_diagonal_second = col * (HEIGHT - 1) == (HEIGHT - 1 - row) * (WIDTH - 1);
+
+            if is_border_top_or_bottom || is_border_sides || is_diagonal_main || is_diagonal_second {
+                canvas.push('*');
+            } else {
+                canvas.push(' ');
             }
         }
-        result.push('\n');
+        canvas.push('\n');
     }
 
-    // Один раз виводимо весь результат
-    print!("{}", result);
+    print!("{}", canvas); // Виводимо увесь малюнок за один раз
 }

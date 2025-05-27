@@ -1,18 +1,17 @@
-/// Функція для циклічного зсуву рядка
-pub fn rotate(s: String, n: isize) -> String {
-    let len = s.len();
-    if len == 0 {
-        return s;
+/// Обертає рядок циклічно на задану кількість позицій
+pub fn shift_string(input: String, offset: isize) -> String {
+    let length = input.len();
+    if length == 0 {
+        return input;
     }
 
-    // Нормалізація зміщення
-    let shift = ((n % len as isize) + len as isize) % len as isize;
-    let shift = shift as usize;
+    // Обчислюємо фактичний зсув
+    let actual_shift = ((offset % length as isize + length as isize) % length as isize) as usize;
 
-    let mut result = String::with_capacity(len);
-    result.push_str(&s[len - shift..]);
-    result.push_str(&s[..len - shift]);
-    result
+    let mut output = String::with_capacity(length);
+    output.push_str(&input[length - actual_shift..]);
+    output.push_str(&input[..length - actual_shift]);
+    output
 }
 
 #[cfg(test)]
@@ -20,27 +19,23 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test() {
-        let s = "abcdefgh".to_string();
-        let shifts = [
-            (0,  "abcdefgh"),
-            (8,  "abcdefgh"),
-            (-8, "abcdefgh"),
-            (1,  "habcdefg"),
-            (2,  "ghabcdef"),
-            (10, "ghabcdef"),
+    fn shifting_works() {
+        let base = "abcdefgh".to_string();
+        let cases = vec![
+            (0, "abcdefgh"),
+            (1, "habcdefg"),
+            (2, "ghabcdef"),
             (-1, "bcdefgha"),
             (-2, "cdefghab"),
-            (-10,"cdefghab"),
+            (8, "abcdefgh"),
+            (-8, "abcdefgh"),
+            (10, "ghabcdef"),
+            (-10, "cdefghab"),
         ];
 
-        shifts
-            .iter()
-            .for_each(|(n, exp)| 
-                assert_eq!(
-                    rotate(s.clone(), *n), 
-                    exp.to_string()
-                )
-            );
+        for (offset, expected) in cases {
+            let result = shift_string(base.clone(), offset);
+            assert_eq!(result, expected);
+        }
     }
 }

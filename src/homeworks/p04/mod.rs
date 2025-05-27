@@ -1,18 +1,18 @@
-const HEIGHT: usize = 11; // Висота ромба (має бути непарною!)
+const SIZE: usize = 11; // Висота ромба (має бути непарною)
 
 fn main() {
-  let mut result = String::new();
-  let mid = HEIGHT / 2;
+    let mut output = String::new();
+    let center = SIZE / 2;
 
-  for i in 0..HEIGHT {
-      let level = if i <= mid { i } else { HEIGHT - i - 1 };
-      let spaces = mid - level;
-      let stars = 2 * level + 1;
+    for line in 0..SIZE {
+        let distance = center as isize - (center as isize - line as isize).abs();
+        let padding = center - distance as usize;
+        let symbol_count = 2 * distance as usize + 1;
 
-      result.push_str(&" ".repeat(spaces));
-      result.push_str(&"*".repeat(stars));
-      result.push('\n');
-  }
+        output += &" ".repeat(padding);
+        output += &"*".repeat(symbol_count);
+        output.push('\n');
+    }
 
-  print!("{}", result);
+    print!("{}", output);
 }

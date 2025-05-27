@@ -1,16 +1,17 @@
-// function
-pub fn gcd(mut a: u64, mut b: u64) -> u64 {
-    while b != 0 {
-        let temp = b;
-        b = a % b;
-        a = temp;
+// Функція для обчислення НОД за алгоритмом Евкліда
+pub fn find_gcd(a: u64, b: u64) -> u64 {
+    let (mut x, mut y) = (a, b);
+    while y != 0 {
+        let remainder = x % y;
+        x = y;
+        y = remainder;
     }
-    a
+    x
 }
 
-// test
+// Тестова функція
 fn main() {
-    let a = 36;
-    let b = 60;
-    println!("GCD of {} and {} is {}", a, b, gcd(a, b));
+    let num1 = 36;
+    let num2 = 60;
+    println!("НОД чисел {} і {} дорівнює {}", num1, num2, find_gcd(num1, num2));
 }

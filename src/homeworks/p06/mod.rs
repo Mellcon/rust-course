@@ -1,28 +1,26 @@
-pub fn draw_tree(levels: usize) {
-    // function
-    let total_width = levels * 2 + 1;
+pub fn print_christmas_tree(tiers: usize) {
+    let width = tiers * 2 + 1;
 
-    for level in 0..levels {
-        for row in 0..=level + 1 {
-            let stars = 2 * row + 1;
-            let spaces = total_width - row - 1;
-            let line = " ".repeat(spaces) + &"*".repeat(stars);
-            println!("{}", line);
+    for tier in 0..tiers {
+        for line in 0..=(tier + 1) {
+            let branch_count = 2 * line + 1;
+            let offset = width - line - 1;
+            let branch_line = format!("{}{}", " ".repeat(offset), "*".repeat(branch_count));
+            println!("{}", branch_line);
         }
     }
 
-    // draw
-    let trunk_width = 1;
-    let trunk_height = 2;
-    let trunk_padding = total_width - 1;
+    // Ствол
+    let stem_width = 1;
+    let stem_height = 2;
+    let stem_indent = width - 1;
 
-    for _ in 0..trunk_height {
-        println!("{}{}", " ".repeat(trunk_padding), "|");
+    for _ in 0..stem_height {
+        println!("{}{}", " ".repeat(stem_indent), "|");
     }
 }
 
-// test
 fn main() {
-    let levels = 3;
-    draw_tree(levels);
+    let tree_tiers = 3;
+    print_christmas_tree(tree_tiers);
 }
